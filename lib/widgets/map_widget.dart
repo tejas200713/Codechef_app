@@ -12,18 +12,18 @@ class MapWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        initialCenter: LatLng(
+        center: LatLng(
           locationProvider.currentLocation?.latitude ?? 0,
           locationProvider.currentLocation?.longitude ?? 0,
         ),
-        initialZoom: 13.0,
+        zoom: 13.0,
       ),
-      children: [
-        TileLayer(
+      layers: [
+        TileLayerOptions(
           urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           subdomains: ['a', 'b', 'c'],
         ),
-        MarkerLayer(
+        MarkerLayerOptions(
           markers: [
             if (locationProvider.currentLocation != null)
               Marker(
@@ -33,7 +33,7 @@ class MapWidget extends StatelessWidget {
                   locationProvider.currentLocation!.latitude,
                   locationProvider.currentLocation!.longitude,
                 ),
-                child: Icon(Icons.location_pin, color: Colors.red, size: 40),
+                builder: (ctx) => Icon(Icons.location_pin, color: Colors.red, size: 40),
               ),
           ],
         ),
